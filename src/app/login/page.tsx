@@ -4,15 +4,30 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
+import api from "@/lib/axios";
 
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        router.push("/dashboard");
+        try {
+            const res = await api.post('/auth/login', { email, password });
+
+            // Axios automatically checks res.status (throws on err)
+            const data = res.data;
+            localStorage.setItem('token', data.token);
+            // Must also set the cookie for SSR middleware
+            document.cookie = `token=${data.token}; path=/`;
+
+            localStorage.setItem('user', JSON.stringify(data.user));
+            router.push('/dashboard');
+        } catch (error: any) {
+            console.error('Login error:', error);
+            alert(error.response?.data?.error || 'An error occurred during login');
+        }
     };
 
     return (

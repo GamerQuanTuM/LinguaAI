@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  passwordHash   String
+  language       String
+  level          String         @default("A1") // e.g., A1, A2, B1
+  dailyMinutes   Int            @default(15)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  courses        Course[]
+  learnedItems   LearnedItem[]
+  progresses     Progress[]
+  weekendTests   WeekendTest[]
+  dailyLessons   DailyLesson[]
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  userId      String   @unique // One active course per user for simplicity
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coursePlan  Json     // The generated LangGraph plan: [{ module: "Greetings", topics: [...] }]
+  createdAt   DateTime @default(now())
+}
+
+model LearnedItem {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   // "vocabulary" or "grammar"
+  content     String   // The actual word or grammar rule (e.g., "hola" or "past tense 'ar' verbs")
+  mastered    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, type, content]) // Cannot learn the exact same content twice
+}
+
+// Tracks the daily activity and streak
+model Progress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime @default(now())
+  lessonsDone Int      @default(0)
+
+  @@unique([userId, date])
+}
+
+model WeekendTest {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  testContent Json     // The generated test questions
+  score       Float?
+  takenAt     DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model DailyLesson {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date        DateTime 
+  vocabulary  Json
+  grammar     Json
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+// Global word of the day table
+model WordOfTheDay {
+  id          String   @id @default(uuid())
+  language    String
+  date        DateTime @default(now()) // Stored as a pure date string or truncated DateTime
+  word        String
+  meaning     String
+  example     String
+  createdAt   DateTime @default(now())
+
+  @@unique([language, date])
+}

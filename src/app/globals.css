@@ -138,3 +138,61 @@ a {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* ─── Sleek Global Scrollbar ─────────────────────────────────── */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+/* Chrome / Safari / Edge */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--primary) 0%,
+    var(--secondary) 100%
+  );
+  border-radius: 9999px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  filter: brightness(1.2);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Utility class for overflow containers that want the same style */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--primary) 0%,
+    var(--secondary) 100%
+  );
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}

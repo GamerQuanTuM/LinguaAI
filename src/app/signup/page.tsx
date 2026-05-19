@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import api from "@/lib/axios";
 import { ChevronRight, ChevronLeft, Check } from "lucide-react";
 
 export default function SignupPage() {
@@ -18,23 +19,61 @@ export default function SignupPage() {
         dailyGoal: "15 min"
     });
 
-    const languages = [
-        { name: "Spanish", flag: "🇪🇸" },
-        { name: "French", flag: "🇫🇷" },
-        { name: "German", flag: "🇩🇪" },
-        { name: "Japanese", flag: "🇯🇵" },
-        { name: "Italian", flag: "🇮🇹" },
-        { name: "Mandarin", flag: "🇨🇳" },
-    ];
+   const languages = [
+    { name: "Spanish", flag: "🇪🇸" },
+    { name: "French", flag: "🇫🇷" },
+    { name: "German", flag: "🇩🇪" },
+    { name: "Japanese", flag: "🇯🇵" },
+    { name: "Italian", flag: "🇮🇹" },
+    { name: "Mandarin", flag: "🇨🇳" },
+    { name: "Portuguese", flag: "🇧🇷" },
+    { name: "Korean", flag: "🇰🇷" },
+    { name: "Arabic", flag: "🇸🇦" },
+    { name: "Russian", flag: "🇷🇺" },
+    { name: "Hindi", flag: "🇮🇳" },
+    { name: "Dutch", flag: "🇳🇱" },
+    { name: "Turkish", flag: "🇹🇷" },
+    { name: "Polish", flag: "🇵🇱" },
+    { name: "Swedish", flag: "🇸🇪" },
+    { name: "Greek", flag: "🇬🇷" },
+    { name: "Vietnamese", flag: "🇻🇳" },
+    { name: "Thai", flag: "🇹🇭" },
+    { name: "Indonesian", flag: "🇮🇩" },
+    { name: "Hebrew", flag: "🇮🇱" },
+];
 
     const levels = ["Beginner", "Intermediate", "Advanced"];
     const goals = ["5 min", "15 min", "30 min", "1 hour"];
 
-    const handleNext = () => {
-        if (step < 3) setStep(step + 1);
-        else {
-            // Submit logic here
-            router.push("/dashboard");
+    const handleNext = async () => {
+        if (step < 3) {
+            setStep(step + 1);
+        } else {
+            try {
+                let dailyMinutes = 15;
+                if (formData.dailyGoal === "5 min") dailyMinutes = 5;
+                else if (formData.dailyGoal === "15 min") dailyMinutes = 15;
+                else if (formData.dailyGoal === "30 min") dailyMinutes = 30;
+                else if (formData.dailyGoal === "1 hour") dailyMinutes = 60;
+
+                const res = await api.post('/auth/register', {
+                    email: formData.email,
+                    password: formData.password,
+                    language: formData.targetLanguage,
+                    level: formData.currentLevel,
+                    dailyMinutes
+                });
+
+                const data = res.data;
+                localStorage.setItem('token', data.token);
+                document.cookie = `token=${data.token}; path=/`;
+                localStorage.setItem('user', JSON.stringify(data.user));
+                router.push("/dashboard");
+
+            } catch (error: any) {
+                console.error("Signup error:", error);
+                alert(error.response?.data?.error || "An error occurred during signup");
+            }
         }
     };
 
