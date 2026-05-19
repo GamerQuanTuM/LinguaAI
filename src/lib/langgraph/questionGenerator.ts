@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 // Define the input and output state
 export const GraphState = Annotation.Root({
@@ -23,7 +23,7 @@ const QuestionSchema = z.object({
 
 // LangGraph node to handle generation
 async function generateNode(state: typeof GraphState.State) {
-  const structuredModel = deepseek.withStructuredOutput(QuestionSchema);
+  const structuredModel = model.withStructuredOutput(QuestionSchema);
   
   const prompt = `You are an expert language learning assistant. 
   Generate a high-quality multiple choice question for a student learning ${state.language}.

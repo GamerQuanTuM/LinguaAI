@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 export const EvaluatorState = Annotation.Root({
   language: Annotation<string>(),
@@ -21,7 +21,7 @@ const EvaluationSchema = z.object({
 
 // LangGraph node to handle generation
 async function evaluateLevelNode(state: typeof EvaluatorState.State) {
-  const structuredModel = deepseek.withStructuredOutput(EvaluationSchema);
+  const structuredModel = model.withStructuredOutput(EvaluationSchema);
   
   const prompt = `You are a strict language evaluator assessing a student learning ${state.language} at the ${state.currentLevel} level.
   

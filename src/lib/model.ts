@@ -1,5 +1,5 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatOpenAI, ChatOpenAICallOptions } from "@langchain/openai";
 
 const geminiModel = () => {
     if (!process.env.GOOGLE_API_KEY && !process.env.GEMINI_API_KEY) {
@@ -30,7 +30,39 @@ const deepseekModel = () => {
     });
 }
 
+export const Model = () => {
+    const activeLLM = process.env.ACTIVE_LLM?.toLowerCase().trim();
+    switch (activeLLM) {
+        case "deepseek":
+            return deepseekModel();
+        case "gemini":
+            return geminiModel();
+        default:
+            return geminiModel();
+    }
+}
 
-export const gemini = geminiModel();
-export const deepseek = deepseekModel();
+type Model = ChatOpenAI<ChatOpenAICallOptions> | ChatGoogleGenerativeAI;
+
+let _model: Model | null = null;
+
+const getModel = (): Model => {
+    if (!_model) {
+        _model = Model();
+    }
+    return _model;
+};
+
+// Use a Proxy to lazily load the model. This prevents crashes during module import or build time
+// if environment variables are not yet loaded or if keys are missing for an unused model.
+export const model = new Proxy({}, {
+    get(target, prop, receiver) {
+        const instance = getModel();
+        const value = Reflect.get(instance, prop, receiver);
+        if (typeof value === "function") {
+            return value.bind(instance);
+        }
+        return value;
+    }
+}) as ReturnType<typeof Model>;
 

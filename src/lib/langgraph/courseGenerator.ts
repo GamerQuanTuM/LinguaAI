@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 export const CourseGenState = Annotation.Root({
   language: Annotation<string>(),
@@ -25,7 +25,7 @@ const CoursePlanSchema = z.object({
 // LangGraph node to handle generation
 async function generateCourseNode(state: typeof CourseGenState.State) {
 
-  const structuredModel = deepseek.withStructuredOutput(CoursePlanSchema);
+  const structuredModel = model.withStructuredOutput(CoursePlanSchema);
   
   const prompt = `You are an expert language curriculum designer. 
   Create a comprehensive course syllabus for a student learning ${state.language} at the ${state.level} level.

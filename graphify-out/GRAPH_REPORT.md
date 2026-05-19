@@ -1,16 +1,16 @@
 # Graph Report - langauge-learning-ai-assistant  (2026-05-19)
 
 ## Corpus Check
-- 53 files · ~24,586 words
+- 54 files · ~24,927 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 323 nodes · 539 edges · 38 communities (22 shown, 16 thin omitted)
+- 326 nodes · 554 edges · 39 communities (23 shown, 16 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 25 edges (avg confidence: 0.83)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e0d476f3`
+- Built from commit: `0f1ae519`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -44,22 +44,23 @@
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 34|Community 34]]
+- [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 35|Community 35]]
 - [[_COMMUNITY_Community 36|Community 36]]
 - [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 38|Community 38]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `AuthenticatedRequest` - 18 edges
 2. `withAuth()` - 18 edges
 3. `gemini` - 14 edges
-4. `Dashboard Home Page` - 10 edges
-5. `AI Lesson Workspace Page` - 10 edges
-6. `deepseek` - 8 edges
-7. `Auth Middleware` - 8 edges
-8. `API Axios Client (lib/axios)` - 6 edges
-9. `register()` - 5 edges
-10. `useTheme()` - 5 edges
+4. `Model()` - 10 edges
+5. `Dashboard Home Page` - 10 edges
+6. `AI Lesson Workspace Page` - 10 edges
+7. `deepseek` - 8 edges
+8. `Auth Middleware` - 8 edges
+9. `API Axios Client (lib/axios)` - 6 edges
+10. `register()` - 5 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `ESLint Configuration` --references--> `Next.js Framework`  [EXTRACTED]
@@ -93,19 +94,19 @@
 - **Public Static UI Icons** — file_icon, globe_icon, window_icon [EXTRACTED 1.00]
 - **Next.js and Vercel Branding** — next_logo, vercel_logo [EXTRACTED 1.00]
 
-## Communities (38 total, 16 thin omitted)
+## Communities (39 total, 16 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.12
 Nodes (24): POST, POST, GET, levelEvaluatorApp, Auth Middleware, AuthenticatedRequest, RouteHandler, withAuth() (+16 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (25): DashboardHome(), EvaluationPage(), ConjugationForm, ConjugationTable, GrammarPage(), GrammarRule, IrregularItem, LessonPage() (+17 more)
+Cohesion: 0.07
+Nodes (20): DashboardHome(), EvaluationPage(), ConjugationForm, ConjugationTable, GrammarPage(), GrammarRule, IrregularItem, LessonPage() (+12 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
-Nodes (29): evaluateLevelNode(), EvaluationSchema, EvaluatorState, workflow, ConjugationFormSchema, ConjugationTableSchema, generateModuleNode(), GrammarRuleSchema (+21 more)
+Nodes (30): POST(), evaluateLevelNode(), EvaluationSchema, EvaluatorState, workflow, generateNode(), GraphState, questionGeneratorApp (+22 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.13
@@ -121,15 +122,15 @@ Nodes (9): courseGeneratorApp, CourseGenState, CourseModuleSchema, CoursePlanSch
 
 ### Community 6 - "Community 6"
 Cohesion: 0.27
-Nodes (8): ConjugationForm, ConjugationTable, GrammarRule, IrregularItem, PastGrammarPage(), PastLesson, PastVocabularyPage(), VocabWord
+Nodes (8): generateWordNode(), wordGeneratorApp, WordGenState, WordOfTheDaySchema, workflow, Word Generator LangGraph, WordOfTheDay Prisma Model, GET()
 
 ### Community 7 - "Community 7"
 Cohesion: 0.27
-Nodes (8): generateWordNode(), wordGeneratorApp, WordGenState, WordOfTheDaySchema, workflow, Word Generator LangGraph, WordOfTheDay Prisma Model, GET()
+Nodes (8): ConjugationForm, ConjugationTable, GrammarRule, IrregularItem, PastGrammarPage(), PastLesson, PastVocabularyPage(), VocabWord
 
 ### Community 8 - "Community 8"
-Cohesion: 0.31
-Nodes (7): POST(), generateNode(), GraphState, questionGeneratorApp, QuestionSchema, workflow, Question Generator LangGraph
+Cohesion: 0.3
+Nodes (10): ConjugationFormSchema, ConjugationTableSchema, generateModuleNode(), GrammarRuleSchema, IrregularItemSchema, LessonSchema, moduleGeneratorApp, ModuleGenState (+2 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.39
@@ -143,23 +144,27 @@ Nodes (4): HangulPage(), Tab, tabs, HANGUL_DATA
 Cohesion: 0.25
 Nodes (8): ESLint Configuration, Next.js Configuration, Next.js Environment Types, Next.js Framework, Prisma Configuration, Prisma ORM, proxy (Middleware), React Compiler
 
-### Community 13 - "Community 13"
+### Community 12 - "Community 12"
+Cohesion: 0.48
+Nodes (5): ActivityBar(), DAYS_OF_WEEK, ProgressPage(), StatCard(), Stats
+
+### Community 14 - "Community 14"
 Cohesion: 0.33
 Nodes (6): Course, DailyLesson, LearnedItem, Progress, User, WeekendTest
 
-### Community 14 - "Community 14"
+### Community 15 - "Community 15"
 Cohesion: 0.6
 Nodes (3): AskAIPage(), Message, SavedQuery
 
-### Community 15 - "Community 15"
+### Community 16 - "Community 16"
 Cohesion: 0.4
 Nodes (5): File Icon, Globe Icon, Next.js Logo, Vercel Logo, Window Icon
 
-### Community 17 - "Community 17"
+### Community 18 - "Community 18"
 Cohesion: 0.5
 Nodes (4): PostCSS, PostCSS Configuration, Tailwind CSS Configuration, Tailwind CSS
 
-### Community 21 - "Community 21"
+### Community 22 - "Community 22"
 Cohesion: 0.67
 Nodes (3): Sidebar navigation, Theme toggle button, Theme provider
 
@@ -171,17 +176,17 @@ Nodes (3): Sidebar navigation, Theme toggle button, Theme provider
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `gemini` connect `Community 2` to `Community 8`, `Community 5`, `Community 7`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+- **Why does `gemini` connect `Community 2` to `Community 8`, `Community 5`, `Community 6`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `Dashboard Home Page` (e.g. with `Dashboard Layout` and `API: GET /progress/stats`) actually correct?**
   _`Dashboard Home Page` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 3 inferred relationships involving `AI Lesson Workspace Page` (e.g. with `Grammar Lab Page` and `Vocabulary Flashcards Page`) actually correct?**
-  _`AI Lesson Workspace Page` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `eslintConfig`, `nextConfig`, `ESLint Configuration` to the rest of the system?**
   _44 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.12 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.09 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.13 - nodes in this community are weakly interconnected._

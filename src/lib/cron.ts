@@ -9,16 +9,16 @@ export function setupCronJobs() {
         console.log("Running Daily Cron Job: Generating Word of the Day for supported languages.");
         
         try {
-            // Because Next.js runs this internally, we can just hit our own API route locally. 
-            // Or you can directly import the logic. Hitting the API is isolated.
-            const languages = ["Spanish", "French", "German"]; // Add your supported languages here
-            
-            for (const lang of languages) {
-                // Determine base URL, fallback to localhost for local dev cron
-                const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-                await fetch(`${baseUrl}/api/word-of-the-day?language=${lang}`);
-                console.log(`Successfully generated word for ${lang}`);
+            // Determine base URL, fallback to localhost for local dev cron
+            const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+            const headers: Record<string, string> = {};
+            if (process.env.CRON_SECRET) {
+                headers['authorization'] = `Bearer ${process.env.CRON_SECRET}`;
             }
+
+            const response = await fetch(`${baseUrl}/api/cron/word-of-the-day`, { headers });
+            const data = await response.json();
+            console.log("Successfully completed Word of the Day cron job:", data);
         } catch (error) {
             console.error("Cron Job Error:", error);
         }

@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 export const WordGenState = Annotation.Root({
   language: Annotation<string>(),
@@ -18,7 +18,7 @@ const WordOfTheDaySchema = z.object({
 
 // LangGraph node to handle generation
 async function generateWordNode(state: typeof WordGenState.State) {
-  const structuredModel = deepseek.withStructuredOutput(WordOfTheDaySchema);
+  const structuredModel = model.withStructuredOutput(WordOfTheDaySchema);
   
   const prompt = `You are a language teacher assigning the "Word of the Day" for ${state.language}.
   

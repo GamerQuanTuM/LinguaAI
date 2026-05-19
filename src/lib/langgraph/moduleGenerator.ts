@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 export const ModuleGenState = Annotation.Root({
   language: Annotation<string>(),
@@ -50,7 +50,7 @@ const LessonSchema = z.object({
 
 // LangGraph node to handle generation
 async function generateModuleNode(state: typeof ModuleGenState.State) {
-  const structuredModel = deepseek.withStructuredOutput(LessonSchema);
+  const structuredModel = model.withStructuredOutput(LessonSchema);
 
   const prompt = `You are an expert language teacher specializing in ${state.language}. 
   Create a new daily lesson for a student learning ${state.language} at the ${state.level} level.

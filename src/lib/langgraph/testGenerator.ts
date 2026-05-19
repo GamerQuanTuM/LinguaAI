@@ -1,6 +1,6 @@
 import { StateGraph, Annotation } from "@langchain/langgraph";
 import { z } from "zod";
-import { deepseek } from "../model";
+import { model } from "../model";
 
 export const TestGenState = Annotation.Root({
   language: Annotation<string>(),
@@ -25,7 +25,7 @@ const WeekendTestSchema = z.object({
 
 // LangGraph node to handle generation
 async function generateTestNode(state: typeof TestGenState.State) {
-  const structuredModel = deepseek.withStructuredOutput(WeekendTestSchema);
+  const structuredModel = model.withStructuredOutput(WeekendTestSchema);
   
   const learnedStringsContext = state.recentLearnedItems.map(item => `[${item.type.toUpperCase()}] ${item.content}`).join("\n");
 
