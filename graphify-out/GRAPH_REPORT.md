@@ -1,4 +1,4 @@
-# Graph Report - langauge-learning-ai-assistant  (2026-05-19)
+# Graph Report - langauge-learning-ai-assistant  (2026-05-20)
 
 ## Corpus Check
 - 54 files · ~24,927 words
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `febd9eab`
+- Built from commit: `8ba411db`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
